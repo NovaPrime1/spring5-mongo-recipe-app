@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.model.Recipe;
+import guru.springframework.repository.controllers.IndexController;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class IndexControllerTest {
         recipes.add(new Recipe());
 
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
 
         recipes.add(recipe);
 
