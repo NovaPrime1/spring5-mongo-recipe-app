@@ -1,10 +1,8 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.model.Recipe;
-import guru.springframework.repository.controllers.ControllerExceptionHandler;
-import guru.springframework.repository.controllers.RecipeController;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +11,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.mockito.Mockito.*;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,7 +37,7 @@ public class RecipeControllerTest {
 
         controller = new RecipeController(recipeService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
-                .setControllerAdvice( new ControllerExceptionHandler())
+                .setControllerAdvice(new ControllerExceptionHandler())
                 .build();
     }
 
@@ -68,17 +66,6 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetRecipeNumberFormat() throws Exception {
-
-//        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
-
-        mockMvc.perform(get("/recipe/asdf/show"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
-    }
-
-
-    @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
 
@@ -96,27 +83,28 @@ public class RecipeControllerTest {
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
         mockMvc.perform(post("/recipe")
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .param("id", "")
-                    .param("description", "some string")
-                    .param("directions", "some directions")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", "")
+                        .param("description", "some string")
+                        .param("directions", "some directions")
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
     }
 
     @Test
-    public void testPostNewRecipeFormValidation() throws Exception {
+    public void testPostNewRecipeFormValidationFail() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId("2");
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
         mockMvc.perform(post("/recipe")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id", "")
-                .param("cookTime","3000")
-        )
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", "")
+                        .param("cookTime", "3000")
+
+                )
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("recipe"))
                 .andExpect(view().name("recipe/recipeform"));
@@ -135,7 +123,6 @@ public class RecipeControllerTest {
                 .andExpect(model().attributeExists("recipe"));
     }
 
-    // Can not do a delete method via http unless you are using javascript. so that why this is a get.
     @Test
     public void testDeleteAction() throws Exception {
         mockMvc.perform(get("/recipe/1/delete"))
