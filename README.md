@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/NovaPrime1/spring5-mongo-recipe-app.svg?style=svg&circle-token=<YOUR_STATUS_API_TOKEN>)]((https://app.circleci.com/pipelines/github/NovaPrime1/spring5-mongo-recipe-app)
+[![CircleCI](https://circleci.com/gh/NovaPrime1/spring5-mongo-recipe-app.svg?style=svg](https://app.circleci.com/pipelines/github/NovaPrime1/spring5-mongo-recipe-app)
 
 # spring5-mongo-recipe-app
 Recipe Application Using MongoDB
