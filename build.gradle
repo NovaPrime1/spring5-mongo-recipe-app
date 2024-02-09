@@ -63,24 +63,18 @@ dependencies {
 
 }
 
+//test {
+//	finalizedBy jacocoTestReport
+//}
 //
-//
-//tasks.named('test') {
-//	useJUnitPlatform()
+//jacocoTestReport {
+//	dependsOn test
 //}
 
-test {
-	finalizedBy jacocoTestReport
-}
-
-jacocoTestReport {
-	dependsOn test
-}
-
-jacoco {
-	toolVersion = "0.8.11"
-//	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
+//jacoco {
+//	toolVersion = "0.8.11"
+////	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+//}
 
 //export test coverage
 jacocoTestReport {
@@ -88,7 +82,6 @@ jacocoTestReport {
 		xml.required = true   // There is a problem right here
 		csv.required = false
 		html.required = false
-//		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
 	}
 }
 
