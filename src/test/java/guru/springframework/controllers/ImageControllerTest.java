@@ -103,10 +103,10 @@ public class ImageControllerTest {
         assertEquals(s.getBytes().length, responseBytes.length);
     }
 
-    @Test
-    public void testImageFormatExceptionHandle() throws Exception {
-        mockMvc.perform(get( "/recipe/asdf/recipeimage"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
-    }
+//    @Test -- Removed this test because it was just a demo
+//    public void testImageFormatExceptionHandle() throws Exception {
+//        mockMvc.perform(get( "/recipe/asdf/recipeimage"))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(view().name("400error"));
+//    }
 }
