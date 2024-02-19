@@ -4,12 +4,14 @@ import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.model.UnitOfMeasure;
 import guru.springframework.repository.UnitOfMeasureRepository;
+import guru.springframework.repository.reactive.UnitOfMeasureReactiveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -23,11 +25,14 @@ public class UnitOfMeasureServiceImplTest {
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
+    @Mock
+    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        service = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
+        service = new UnitOfMeasureServiceImpl(unitOfMeasureReactiveRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
     @Test
@@ -45,7 +50,7 @@ public class UnitOfMeasureServiceImplTest {
         when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
 
         //when
-        Set<UnitOfMeasureCommand> commands = service.listAllUoms();
+        List<UnitOfMeasureCommand> commands = service.listAllUoms().collectList().block();
 
         //then
         assertEquals(2, commands.size());
