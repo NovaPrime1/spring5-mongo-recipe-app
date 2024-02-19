@@ -26,17 +26,15 @@ public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
-//    private final RecipeRepository recipeRepository;
     private final RecipeReactiveRepository recipeReactiveRepository;
     private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
     public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
                                  IngredientCommandToIngredient ingredientCommandToIngredient,
-                                 RecipeRepository recipeRepository, RecipeReactiveRepository recipeReactiveRepository,
+                                 RecipeReactiveRepository recipeReactiveRepository,
                                  UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository) {
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
-//        this.recipeRepository = recipeRepository;
         this.recipeReactiveRepository = recipeReactiveRepository;
         this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
     }
@@ -164,9 +162,8 @@ public class IngredientServiceImpl implements IngredientService {
             if(ingredientOptional.isPresent()){
                 log.error("found Ingredient");
 
-
                 recipe.getIngredients().remove(ingredientOptional.get());
-                recipeReactiveRepository.save(recipe);
+                recipeReactiveRepository.save(recipe).block();  // If you forget to do a block on the save, the save will not persist until something else is initiated
             }
         } else {
             log.error("Recipe Id Not found. Id:" + recipeId);
