@@ -21,6 +21,7 @@ public class RecipeReactiveRepositoryTest {
     @Before
     public void setUp() throws Exception{
         recipeReactiveRepository.deleteAll().block();
+        System.out.println(" Inside recipeReactiveReactiveRepo deleting all");
     }
 
     @Test

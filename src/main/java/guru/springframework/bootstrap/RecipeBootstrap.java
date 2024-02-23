@@ -46,7 +46,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         loadUom();
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
-        System.out.println("onApplicationEvent being called");
+
 
 //        log.error("#########");
 //        log.error(" UOM Count " + unitOfMeasureReactiveRepository.count().block().toString());

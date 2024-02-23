@@ -27,11 +27,12 @@ public class UnitOfMeasureReactiveRepositoryTest {
     @Before
     public void setUp() throws Exception {
 
-        unitOfMeasureReactiveRepository.deleteAll();
+        unitOfMeasureReactiveRepository.deleteAll().block();
+        System.out.println(" Inside unitOfMeasureReactiveRepo deleting all");
     }
 
     @Test
-    public void testSaveUoM() throws Exception {
+    public void testSaveUom() throws Exception {
         UnitOfMeasure uom = new UnitOfMeasure();
         uom.setDescription(EACH);
 
@@ -40,7 +41,9 @@ public class UnitOfMeasureReactiveRepositoryTest {
         Long count = unitOfMeasureReactiveRepository.count().block();
 
         assertEquals(Long.valueOf(1L), count);
+
     }
+
 
     @Test
     public void testFindByDescription() throws Exception {

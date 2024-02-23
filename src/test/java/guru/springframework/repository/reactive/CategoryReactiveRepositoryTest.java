@@ -25,6 +25,7 @@ public class CategoryReactiveRepositoryTest {
     @Before
     public void setUp() throws Exception{
         categoryReactiveRepository.deleteAll().block();
+        System.out.println(" Inside categoryReactiveReactiveRepo deleting all");
     }
 
     @Test
@@ -46,11 +47,10 @@ public class CategoryReactiveRepositoryTest {
 
         categoryReactiveRepository.save(category).then().block();
 
-        Category fetchedCat = categoryReactiveRepository.findByDescription("foo").block();
+        Category fetchedCat = categoryReactiveRepository.findByDescription("Foo").block();
 
         assertNotNull(fetchedCat.getId());
-
-}
+    }
 
 
 

@@ -144,7 +144,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Mono <Void> deleteById(String recipeId, String idToDelete) {
 
-        log.error("Deleting ingredient: " + recipeId + ":" + idToDelete);
+        log.debug("Deleting ingredient: " + recipeId + ":" + idToDelete);
 
         Recipe recipe = recipeReactiveRepository.findById(recipeId).block();
 
@@ -160,13 +160,13 @@ public class IngredientServiceImpl implements IngredientService {
                     .findFirst();
 
             if(ingredientOptional.isPresent()){
-                log.error("found Ingredient");
+                log.debug("found Ingredient");
 
                 recipe.getIngredients().remove(ingredientOptional.get());
                 recipeReactiveRepository.save(recipe).block();  // If you forget to do a block on the save, the save will not persist until something else is initiated
             }
         } else {
-            log.error("Recipe Id Not found. Id:" + recipeId);
+            log.debug("Recipe Id Not found. Id:" + recipeId);
         }
         return Mono.empty();
     }
